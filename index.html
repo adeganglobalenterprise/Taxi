@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transportation Services - Global Transport Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <!-- Admin Cover Page -->
+    <div id="admin-cover" class="cover-page">
+        <div class="cover-container">
+            <div class="logo">
+                <h1>🚗 Transport Admin</h1>
+                <p>Admin Portal - Transportation Services</p>
+            </div>
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="admin-email" placeholder="Enter admin email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="admin-password" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Admin Login</button>
+                <div class="link-text">
+                    <p>Don't have an admin account? <a href="#" onclick="showAdminRegister()">Register</a></p>
+                    <p style="margin-top: 10px;"><a href="#" onclick="showCustomerCover()">Customer Portal</a></p>
+                </div>
+            </form>
+            <form id="admin-register-form" style="display: none;">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="admin-reg-name" placeholder="Enter full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="admin-reg-email" placeholder="Enter email address" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="admin-reg-phone" placeholder="Enter phone number" required>
+                </div>
+                <div class="form-group">
+                    <label>Create Password</label>
+                    <input type="password" id="admin-reg-password" placeholder="Create password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Register as Admin</button>
+                <div class="link-text">
+                    <p>Already have an account? <a href="#" onclick="showAdminLogin()">Login</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Customer Cover Page -->
+    <div id="customer-cover" class="cover-page" style="display: none;">
+        <div class="cover-container">
+            <div class="logo">
+                <h1>🚀 Transport Services</h1>
+                <p>Global Transportation Solutions</p>
+            </div>
+            <form id="customer-login-form">
+                <div class="form-group">
+                    <label>Email Address or Account Number</label>
+                    <input type="text" id="customer-email" placeholder="Enter email or account number" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="customer-password" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn btn-secondary">Customer Login</button>
+                <div class="link-text">
+                    <p>New customer? <a href="#" onclick="showCustomerRegister()">Sign Up</a></p>
+                    <p style="margin-top: 10px;"><a href="#" onclick="showAdminCover()">Admin Portal</a></p>
+                </div>
+            </form>
+            <form id="customer-register-form" style="display: none;">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="cust-reg-name" placeholder="Enter full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="cust-reg-email" placeholder="Enter email address" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="cust-reg-phone" placeholder="Enter phone number" required>
+                </div>
+                <div class="form-group">
+                    <label>Country of Residence</label>
+                    <input type="text" id="cust-reg-country" placeholder="Enter country" required>
+                </div>
+                <div class="form-group">
+                    <label>Create Password</label>
+                    <input type="password" id="cust-reg-password" placeholder="Create password" required>
+                </div>
+                <button type="submit" class="btn btn-secondary">Register Customer</button>
+                <div class="link-text">
+                    <p>Already have an account? <a href="#" onclick="showCustomerLogin()">Login</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Customer Dashboard -->
+    <div id="customer-dashboard" class="dashboard container">
+        <div class="header">
+            <h2>🚀 Customer Dashboard</h2>
+            <div class="user-info">
+                <span id="customer-welcome">Welcome, Customer</span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <!-- Voice Recognition Section -->
+        <div class="voice-section">
+            <h3>🎤 Voice-Activated Transportation Assistant</h3>
+            <p style="margin-bottom: 20px;">I recognize your voice and identify if you're a man, woman, child, boy, girl, or elderly person</p>
+            <button class="voice-btn" id="voice-btn" onclick="toggleVoiceRecognition()">
+                <span>🎤</span> Start Voice Recognition
+            </button>
+            <div class="recognition-result" id="recognition-result" style="display: none;">
+                <p><strong>Detected:</strong> <span id="detected-person">Waiting...</span></p>
+                <p><strong>Understanding:</strong> <span id="voice-text">Listening...</span></p>
+            </div>
+        </div>
+
+        <!-- Transportation Calculator -->
+        <div class="calculator-section">
+            <h3 class="section-title">🚗 Transportation Calculator</h3>
+            
+            <div class="form-group">
+                <label>Select Transportation Mode</label>
+                <div class="transport-grid">
+                    <div class="transport-option" data-transport="taxi" data-rate="0.50">
+                        <div class="icon">🚕</div>
+                        <div class="name">Taxi</div>
+                    </div>
+                    <div class="transport-option" data-transport="bus" data-rate="0.20">
+                        <div class="icon">🚌</div>
+                        <div class="name">Bus</div>
+                    </div>
+                    <div class="transport-option" data-transport="train" data-rate="0.15">
+                        <div class="icon">🚂</div>
+                        <div class="name">Train</div>
+                    </div>
+                    <div class="transport-option" data-transport="motorcycle" data-rate="0.30">
+                        <div class="icon">🏍️</div>
+                        <div class="name">Motorcycle</div>
+                    </div>
+                    <div class="transport-option" data-transport="plane" data-rate="2.00">
+                        <div class="icon">✈️</div>
+                        <div class="name">Plane</div>
+                    </div>
+                    <div class="transport-option" data-transport="walk" data-rate="0.00">
+                        <div class="icon">🚶</div>
+                        <div class="name">Walk</div>
+                    </div>
+                    <div class="transport-option" data-transport="ship" data-rate="1.50">
+                        <div class="icon">🚢</div>
+                        <div class="name">Ship</div>
+                    </div>
+                    <div class="transport-option" data-transport="truck" data-rate="0.80">
+                        <div class="icon">🚚</div>
+                        <div class="name">Truck</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Starting Location</label>
+                <input type="text" id="start-location" placeholder="Enter starting point">
+            </div>
+
+            <div class="form-group">
+                <label>Destination</label>
+                <input type="text" id="destination" placeholder="Enter destination">
+            </div>
+
+            <div class="form-group">
+                <label>Distance (in meters)</label>
+                <input type="number" id="distance" placeholder="Enter distance in meters" min="0">
+            </div>
+
+            <div class="form-group">
+                <label>Weight of Goods/Load (kg)</label>
+                <input type="number" id="weight" placeholder="Enter weight in kg" min="0">
+            </div>
+
+            <div class="form-group">
+                <label>Number of Passengers</label>
+                <input type="number" id="passengers" placeholder="Enter number of passengers" min="1" value="1">
+            </div>
+
+            <button class="btn btn-primary" onclick="calculatePrice()">Calculate Price</button>
+
+            <div class="result-section" id="result-section" style="display: none;">
+                <h4>📋 Transportation Results</h4>
+                <div class="result-item">
+                    <span>Transportation Mode:</span>
+                    <span id="result-transport">-</span>
+                </div>
+                <div class="result-item">
+                    <span>Time Estimated:</span>
+                    <span id="result-time">-</span>
+                </div>
+                <div class="result-item">
+                    <span>Distance:</span>
+                    <span id="result-distance">-</span>
+                </div>
+                <div class="result-item">
+                    <span>Weight:</span>
+                    <span id="result-weight">-</span>
+                </div>
+                <div class="result-item">
+                    <span>Passengers:</span>
+                    <span id="result-passengers">-</span>
+                </div>
+                <div class="result-item">
+                    <span>Rate per 10 meters:</span>
+                    <span id="result-rate">-</span>
+                </div>
+                <div class="result-item">
+                    <span>Admin Fee (5%):</span>
+                    <span id="result-admin-fee">-</span>
+                </div>
+                <div class="result-item">
+                    <span>TOTAL AMOUNT TO PAY:</span>
+                    <span id="result-total">-</span>
+                </div>
+                <button class="btn btn-secondary" onclick="printReceipt()" style="margin-top: 20px;">🖨️ Print Receipt</button>
+            </div>
+
+            <!-- Printable Receipt -->
+            <div class="printable-receipt" id="printable-receipt">
+                <div class="receipt-header">
+                    <h2>🚗 TRANSPORTATION RECEIPT</h2>
+                    <p>Global Transport Services</p>
+                    <p id="receipt-date"></p>
+                </div>
+                <div class="receipt-details">
+                    <div class="result-item">
+                        <span>Customer Name:</span>
+                        <span id="receipt-name">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Account Number:</span>
+                        <span id="receipt-account">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Transportation Mode:</span>
+                        <span id="receipt-transport">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>From:</span>
+                        <span id="receipt-from">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>To:</span>
+                        <span id="receipt-to">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Distance:</span>
+                        <span id="receipt-distance">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Weight:</span>
+                        <span id="receipt-weight">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Time Estimated:</span>
+                        <span id="receipt-time">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Rate per 10m:</span>
+                        <span id="receipt-rate">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Subtotal:</span>
+                        <span id="receipt-subtotal">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Admin Fee (5%):</span>
+                        <span id="receipt-admin-fee">-</span>
+                    </div>
+                </div>
+                <div class="receipt-total">
+                    TOTAL: $<span id="receipt-total">0.00</span>
+                </div>
+                <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;">
+                    <p>Thank you for using our services!</p>
+                    <p>🚗 Transport Services - Global Solutions</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account Section -->
+        <div class="account-section">
+            <h3 class="section-title">💰 Account Management</h3>
+            
+            <div class="balance-card">
+                <p>Available Balance</p>
+                <div class="balance-amount">$<span id="customer-balance">0.00</span></div>
+                <div class="account-number">Account #: <span id="customer-account-num">Loading...</span></div>
+            </div>
+
+            <h4 style="margin-bottom: 20px;">💸 Send Money to Bank Account</h4>
+            <form id="bank-transfer-form" class="transaction-form">
+                <div class="form-group">
+                    <label>Recipient Name</label>
+                    <input type="text" id="transfer-name" placeholder="Enter recipient name" required>
+                </div>
+                <div class="form-group">
+                    <label>Bank Name</label>
+                    <select id="transfer-bank" required>
+                        <option value="">Select Bank</option>
+                        <option value="commercial">Commercial Bank</option>
+                        <option value="microfinance">Microfinance Bank</option>
+                        <option value="wallet">Digital Wallet</option>
+                        <option value="international">International Bank</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Bank Account Number</label>
+                    <input type="text" id="transfer-account" placeholder="Enter account number" required>
+                </div>
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" id="transfer-city" placeholder="Enter city" required>
+                </div>
+                <div class="form-group">
+                    <label>Occupation</label>
+                    <input type="text" id="transfer-occupation" placeholder="Enter occupation" required>
+                </div>
+                <div class="form-group">
+                    <label>Amount to Transfer ($)</label>
+                    <input type="number" id="transfer-amount" placeholder="Enter amount" min="1" required>
+                </div>
+                <div class="form-group" id="swift-code-group" style="display: none;">
+                    <label>SWIFT/Swiss Code (for International)</label>
+                    <input type="text" id="transfer-swift" placeholder="Enter SWIFT code">
+                </div>
+                <button type="submit" class="btn btn-success">💸 Send Money</button>
+            </form>
+        </div>
+
+        <!-- Owner Information -->
+        <div class="owner-info">
+            <h4>👤 App Owner Information</h4>
+            <p><strong>Name:</strong> Olawale Abdul-ganiyu</p>
+            <p><strong>Email:</strong> adeganglobal@gmail.com</p>
+            <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+        </div>
+
+        <!-- Legal Section -->
+        <div class="legal-section">
+            <h4>⚖️ Legal & Compliance</h4>
+            <p><strong>Trademark:</strong> This software is trademarked and exclusively owned by Olawale Abdul-ganiyu.</p>
+            <p><strong>Global Rights:</strong> This application has full legal rights to operate anywhere in the world for transportation and financial services.</p>
+            <p><strong>Network Protocols:</strong> Integrated with Google, Yahoo, Encyclopedia, and AWS network protocols for secure global operations.</p>
+            <p><strong>Domain:</strong> domain.com (Free registered domain)</p>
+            <p><strong>Protection:</strong> All rights reserved. Unauthorized reproduction or distribution is strictly prohibited.</p>
+            <p><strong>Compliance:</strong> Compliant with international transportation and financial regulations.</p>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="dashboard container">
+        <div class="header">
+            <h2>🔐 Admin Dashboard</h2>
+            <div class="user-info">
+                <span id="admin-welcome">Welcome, Admin</span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <div class="admin-dashboard">
+            <div class="admin-sidebar">
+                <ul class="sidebar-menu">
+                    <li class="active" onclick="showAdminSection('customers')">👥 Customers</li>
+                    <li onclick="showAdminSection('accounts')">💰 Accounts</li>
+                    <li onclick="showAdminSection('transfers')">💸 Transfers</li>
+                    <li onclick="showAdminSection('vehicles')">🚗 Vehicles</li>
+                    <li onclick="showAdminSection('messages')">📧 Messages</li>
+                    <li onclick="showAdminSection('settings')">⚙️ Settings</li>
+                </ul>
+            </div>
+
+            <div class="admin-content">
+                <!-- Customers Section -->
+                <div id="admin-customers" class="admin-section">
+                    <h3>👥 Customer Registrations</h3>
+                    <div style="overflow-x: auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Country</th>
+                                    <th>Passport ID</th>
+                                    <th>Driver's License</th>
+                                    <th>Address</th>
+                                    <th>Account #</th>
+                                    <th>Balance</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customers-table-body">
+                                <!-- Customer data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Accounts Section -->
+                <div id="admin-accounts" class="admin-section" style="display: none;">
+                    <h3>💰 Account Management</h3>
+                    <div style="margin-bottom: 20px;">
+                        <h4>Edit Customer Account</h4>
+                        <div class="form-group">
+                            <label>Select Customer</label>
+                            <select id="edit-customer-select">
+                                <option value="">Select customer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Action</label>
+                            <select id="account-action">
+                                <option value="credit">Credit Account</option>
+                                <option value="debit">Debit Account</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount ($)</label>
+                            <input type="number" id="account-amount" placeholder="Enter amount">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" id="account-description" placeholder="Enter description">
+                        </div>
+                        <button class="btn btn-primary" onclick="updateCustomerAccount()">Update Account</button>
+                    </div>
+                </div>
+
+                <!-- Transfers Section -->
+                <div id="admin-transfers" class="admin-section" style="display: none;">
+                    <h3>💸 Admin Transfer System</h3>
+                    <form class="transaction-form">
+                        <div class="form-group">
+                            <label>Recipient Name</label>
+                            <input type="text" id="admin-transfer-name" placeholder="Enter recipient name">
+                        </div>
+                        <div class="form-group">
+                            <label>Bank Type</label>
+                            <select id="admin-transfer-bank">
+                                <option value="commercial">Commercial Bank</option>
+                                <option value="microfinance">Microfinance Bank</option>
+                                <option value="wallet">Digital Wallet</option>
+                                <option value="international">International Bank</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Bank Account Number</label>
+                            <input type="text" id="admin-transfer-account" placeholder="Enter account number">
+                        </div>
+                        <div class="form-group">
+                            <label>City</label>
+                            <input type="text" id="admin-transfer-city" placeholder="Enter city">
+                        </div>
+                        <div class="form-group">
+                            <label>Amount ($)</label>
+                            <input type="number" id="admin-transfer-amount" placeholder="Enter amount">
+                        </div>
+                        <div class="form-group">
+                            <label>SWIFT Code (International)</label>
+                            <input type="text" id="admin-transfer-swift" placeholder="Enter SWIFT code">
+                        </div>
+                        <div class="form-group">
+                            <label>Swiss Code (International)</label>
+                            <input type="text" id="admin-transfer-swiss" placeholder="Enter Swiss code">
+                        </div>
+                        <button type="button" class="btn btn-success" onclick="adminTransfer()">💸 Send Money</button>
+                    </form>
+                </div>
+
+                <!-- Vehicles Section -->
+                <div id="admin-vehicles" class="admin-section" style="display: none;">
+                    <h3>🚗 Vehicle Information</h3>
+                    <div style="overflow-x: auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Owner</th>
+                                    <th>Vehicle Type</th>
+                                    <th>Vehicle Number</th>
+                                    <th>Plate Registration</th>
+                                    <th>Color</th>
+                                    <th>Capacity</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vehicles-table-body">
+                                <!-- Vehicle data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Messages Section -->
+                <div id="admin-messages" class="admin-section" style="display: none;">
+                    <h3>📧 Send Message to Owner</h3>
+                    <div class="message-box">
+                        <div class="form-group">
+                            <label>Your Name</label>
+                            <input type="text" id="message-name" placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label>Your Email</label>
+                            <input type="email" id="message-email" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input type="text" id="message-subject" placeholder="Enter subject">
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea id="message-content" rows="5" placeholder="Enter your message"></textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="sendMessage()">📧 Send to adeganglobal@gmail.com</button>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="admin-settings" class="admin-section" style="display: none;">
+                    <h3>⚙️ Admin Settings</h3>
+                    <div class="message-box">
+                        <h4>Admin Fee Configuration</h4>
+                        <div class="form-group">
+                            <label>Current Admin Fee Rate</label>
+                            <input type="text" value="5%" readonly>
+                        </div>
+                        <h4>Owner Information</h4>
+                        <div class="form-group">
+                            <label>Owner Name</label>
+                            <input type="text" value="Olawale Abdul-ganiyu" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Owner Email</label>
+                            <input type="email" value="adeganglobal@gmail.com" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Owner Phone</label>
+                            <input type="tel" value="+1 (555) 123-4567" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Owner Information -->
+        <div class="owner-info">
+            <h4>👤 App Owner Information</h4>
+            <p><strong>Name:</strong> Olawale Abdul-ganiyu</p>
+            <p><strong>Email:</strong> adeganglobal@gmail.com</p>
+            <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+        </div>
+
+        <!-- Legal Section -->
+        <div class="legal-section">
+            <h4>⚖️ Legal & Compliance</h4>
+            <p><strong>Trademark:</strong> This software is trademarked and exclusively owned by Olawale Abdul-ganiyu.</p>
+            <p><strong>Global Rights:</strong> This application has full legal rights to operate anywhere in the world for transportation and financial services.</p>
+            <p><strong>Network Protocols:</strong> Integrated with Google, Yahoo, Encyclopedia, and AWS network protocols for secure global operations.</p>
+            <p><strong>Domain:</strong> domain.com (Free registered domain)</p>
+            <p><strong>Protection:</strong> All rights reserved. Unauthorized reproduction or distribution is strictly prohibited.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
